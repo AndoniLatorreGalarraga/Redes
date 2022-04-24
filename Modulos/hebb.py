@@ -1,4 +1,3 @@
-import math
 import numpy as np
 
 #función signo
@@ -11,7 +10,7 @@ def signo(z):
 # versión vectorizada de la función signo
 sig = np.vectorize(signo)
 
-#clase red neuronal
+#clase perceptron
 class Perceptron():
     '''
     RedNeuronal(capas = [28*28, 10])

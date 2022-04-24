@@ -1,6 +1,7 @@
 import numpy as np
-import random
-from Modulos import redNeuronal as rn
+import random, time
+from Modulos import redNeuronalSig as rnsigma
+from Modulos import redNeuronalReLU as rnrelu
 from Modulos import hebb as per
 from Modulos import mnist
 
@@ -24,19 +25,25 @@ def main():
             total += 1
         print('Corectas: ', correctas, '/', total, sep = '')
     
-    datosImagenes, datosEtiquetas, testImagenes, etiquetas= mnist.obtenerDatos()
-    datosEntr = [(i, o) for i, o in zip(datosImagenes, datosEtiquetas)]
 
     print('Perceptron:')
+    datosImagenes, datosEtiquetas, testImagenes, etiquetas= mnist.obtenerDatosPer()
+    datosEntr = [(i, o) for i, o in zip(datosImagenes, datosEtiquetas)]
     perceptron = per.Perceptron()
     test(perceptron, testImagenes, etiquetas)
-    entrenar(perceptron, 20, 60000, 1.5)
+    entrenar(perceptron, 2, 60000, 0.01)
 
     print('Red:')
-    red = rn.RedNeuronal()
+
+    datosImagenes, datosEtiquetas, testImagenes, etiquetas= mnist.obtenerDatosRed()
+    datosEntr = [(i, o) for i, o in zip(datosImagenes, datosEtiquetas)]
+
+    red = rnsigma.RedNeuronal()
     test(red, testImagenes, etiquetas)
-    entrenar(red, 20, 10, 1.5)
- 
+    t0 = time.time()
+    entrenar(red, 2, 10, 1.5)
+    print('tiempo', time.time()- t0)
+
 def result(array):
     list = array.T.tolist()[0]
     return list.index(max(list))
